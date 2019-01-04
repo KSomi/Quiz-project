@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta charset="utf-8" http-equiv="encoding">
+    <title>~QUIZ~</title>
+    
+    <link href="../Quiz.css" rel="stylesheet" type="text/css" />
+    
+    
+    <?php
+        include "../Quiz.php";
+    ?>
+    <style>
+        .img {
+            position: relative;
+
+        }
+        .img1 {
+            position: absolute;
+            z-index: 1;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img2 {
+            position: absolute;
+            z-index: 2;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img3 {
+            position: absolute;
+            z-index: 3;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img4 {
+            position: absolute;
+            z-index: 4;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img5 {
+            position: absolute;
+            z-index: 5;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img6 {
+            position: absolute;
+            z-index: 6;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img7 {
+            position: absolute;
+            z-index: 7;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        
+        
+        
+        
+        
+    </style>
+    
+    
+    <script type="text/javascript">
+        var i;
+        var score;
+        var T_ans = [];
+        var F_ans = [];
+        var PNum = <?php echo json_encode($numbers) ?>;
+        var HighR = <?php echo json_encode($user_HighR) ?>;
+        var WeekR = <?php echo json_encode($user_WeekR) ?>;
+        var TimeEnd = false;
+        
+        function startTimer(duration, display) {
+            var start = Date.now(),
+                diff,
+                minutes,
+                seconds;
+            function timer() {
+        // get the number of seconds that have elapsed since 
+        // startTimer() was called
+                diff = duration - (((Date.now() - start) / 1000) | 0);
+
+        // does the same job as parseInt truncates the float
+                minutes = (diff / 60) | 0;
+                seconds = (diff % 60) | 0;
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds; 
+
+                if (diff <= 0) {
+            // add one second so that the count down starts at the full duration
+            // example 05:00 not 04:59
+                    //start = Date.now() + 1000;
+                    var WL = 'Home-LI.html?rscore='+score;
+                    window.location.assign(WL);
+                   
+                    var result_str = '';
+           
+                    for (var j = 1; j < (T_ans.length+F_ans.length)+1; j++){
+                        if (T_ans.includes(j)){
+                            result_str = result_str+j+": "+"(O)\n";
+                        } else{
+                            result_str = result_str+j+": "+"(X)\n";
+                        }
+                    }
+                    alert("당신의 점수는: "+score+'\n'
+                            +"맞힌 개수: "+T_ans.length+'\n'
+                            +"틀린 개수: "+F_ans.length+'\n'
+                            +result_str);
+
+                }
+            };
+    // we don't want to wait a full second before the timer starts
+            timer();
+            setInterval(timer, 1000);
+        }
+
+        window.onload = function () {
+            var Minutes = 60 * 1,
+            display = document.querySelector('#time');
+            startTimer(Minutes, display);
+        };
+        
+    </script>
+</head>
+
+<body>
+    <div class="page-holder">
+        <div class="hd"><br>Quiz ends in <span id="time"></span>&nbsp;!</div>
+        
+        <div class="quiz-holder">
+            <div class="num"><p id="Problem_num"></p>
+                <div class="row">
+                
+                <button class="ans" id="O" onclick="yes()">O</button>
+                <button class="ans" id="X" onclick="no()">X</button>
+                </div>
+            
+            </div>
+
+        </div>
+        <div class="user">
+            <div style="position:relative;" class="avatar" ><p id="Avatar"></p></div>
+            <div class="ScoreBox"><p id="Score"></p></div>
+        </div>
+        
+    </div>
+    
+    <script type="text/javascript">
+        var num;
+        var ans;
+        var Prow = <?php echo json_encode($Prow) ?>;
+        var user_Avatar = <?php echo json_encode($user_Avatar) ?>;
+        
+        
+        document.getElementById("Avatar").innerHTML += "<img class='img1' src='img/back/A_background_"+user_Avatar[0]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar").innerHTML += "<img class='img2' src='img/body.png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar").innerHTML += "<img class='img3' src='img/eye/A_eye_"+user_Avatar[1]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar").innerHTML += "<img class='img4' src='img/mouth/A_mouse_"+user_Avatar[2]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar").innerHTML += "<img class='img5' src='img/clothes/A_cloth_"+user_Avatar[3]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar").innerHTML += "<img class='img6' src='img/head/A_hat_"+user_Avatar[4]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar").innerHTML += "<img class='img7' src='img/hand/A_hand_"+user_Avatar[5]+".png' width='140' height='140' align='middle'>";
+        
+        function Load(){
+
+        if(score == null){
+            score = 0;
+        }
+        
+        if(i == null){
+            i = 1;
+        }
+        
+        num = PNum[i-1]-1;
+        T = Prow[num];
+
+        document.getElementById("Problem_num").innerHTML = "&nbsp;&nbsp;&nbsp;"+i+". "+(T.Prob_OX)+"<br><br><br>";
+        document.getElementById("Score").innerHTML = "  "+score+" 점";
+   
+        ans = T.Answer_OX;
+        }
+        
+        function yes(){
+            if(ans==0){
+                score = score + 50;
+                T_ans.push(i);
+            }else{
+                score = score - 50;
+                F_ans.push(i);
+            }
+            document.getElementById("Score").innerHTML = "  "+score+" 점";
+            i = i+1;
+            Load();
+        }
+        
+        function no(){
+            if(ans==1){
+                score = score + 50;
+                T_ans.push(i);
+            }else{
+                score = score - 50;
+                F_ans.push(i);
+            }
+            document.getElementById("Score").innerHTML = "  "+score+" 점";
+            i = i+1;
+            Load();
+        }
+        
+        Load();
+
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,461 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta charset="utf-8" http-equiv="encoding">
+    <title>~QUIZ~</title>
+    
+    <link href="../Quiz.css" rel="stylesheet" type="text/css" />
+    <script src="../dist/moment.min.js"></script>
+    <script src="../dist/jquery.min.js"></script>
+    <script src="../dist/jquery.daterangepicker.min.js"></script>
+    <script src="../dist/jquery.csv.js"></script>
+    
+    <?php
+        include "MultiStart.php";
+    ?>
+    <style>
+        .img {
+            position: relative;
+
+        }
+        .img1 {
+            position: absolute;
+            z-index: 1;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img2 {
+            position: absolute;
+            z-index: 2;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img3 {
+            position: absolute;
+            z-index: 3;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img4 {
+            position: absolute;
+            z-index: 4;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img5 {
+            position: absolute;
+            z-index: 5;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img6 {
+            position: absolute;
+            z-index: 6;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img7 {
+            position: absolute;
+            z-index: 7;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+
+    </style>
+    
+    
+    <script type="text/javascript">
+        var i;
+        var ppl_inroom = <?php echo $ppl_inroom ?>;
+        var num_room = <?php echo $num_room ?>;
+        console.log(num_room);
+        var user_id = '<?php echo $user_id ?>';
+        var user_1 = '<?php echo $user_1 ?>';
+        var user_2 = '<?php echo $user_2 ?>';
+        var user_3 = '<?php echo $user_3 ?>';
+        var user_4 = '<?php echo $user_4 ?>';
+        var user_Avatar_1 = <?php echo json_encode($user_Avatar_1) ?>;
+        var user_Avatar_2 = <?php echo json_encode($user_Avatar_2) ?>;
+        var user_Avatar_3 = <?php echo json_encode($user_Avatar_3) ?>;
+        var user_Avatar_4 = <?php echo json_encode($user_Avatar_4) ?>;
+        var score_1;
+        var score_2;
+        var score_3;
+        var score_4;
+        var PNum = <?php echo json_encode($numbers) ?>;
+        var ans;
+        var Prow = <?php echo json_encode($Prow) ?>;
+        console.log('first js done');
+        
+    </script>
+</head>
+
+<body>
+    <div class="page-holder">
+        <p id="loading"></p>
+        <div class="hd"><br>Quiz ends in <span id="time"></span>&nbsp;!</div>
+        
+        <div class="quiz-holder">
+            <div class="num"><p id="Problem_num"></p>
+                <div class='row'>
+                    
+                        <button class='ans' onclick="yes()" id="yes">O</button>
+                        <button class='ans' onclick="no()" id="no">X</button>
+                    
+                </div>
+            </div>
+
+        </div>
+
+        <div class="user">
+            <div style="position:relative;" class="avatar" ><p id="Avatar_1"></p></div>
+            <div style="text-align: center; font-size:25px "><p id="user_1"></p></div><br>
+            <div class="ScoreBox"><p id="Score_1"></p></div>
+        </div>
+            
+        <div class="user">
+            <div style="position:relative;" class="avatar" ><p id="Avatar_2"></p></div>
+            <div style="text-align: center; font-size:25px "><p id="user_2"></p></div><br>
+            <div class="ScoreBox"><p id="Score_2"></p></div>
+        </div>
+        
+        <div class="user">
+            <div style="position:relative;" class="avatar" ><p id="Avatar_3"></p></div>
+            <div style="text-align: center; font-size:25px "><p id="user_3"></p></div><br>
+            <div class="ScoreBox"><p id="Score_3"></p></div>
+        </div>
+        
+        <div class="user">
+            <div style="position:relative;" class="avatar" ><p id="Avatar_4"></p></div>
+            <div style="text-align: center; font-size:25px "><p id="user_4"></p></div><br>
+            <div class="ScoreBox"><p id="Score_4"></p></div>
+        </div>
+        
+        
+    </div>
+
+    <script type="text/javascript">
+        
+        document.getElementById('loading').innerHTML = "<img src='../Pics/loading.png'></img>";
+        console.log('second js start');
+         function startTimer(duration, display) {
+            var start = Date.now(),
+                diff,
+                minutes,
+                seconds;
+            function timer() {
+        // get the number of seconds that have elapsed since 
+        // startTimer() was called
+                diff = duration - (((Date.now() - start) / 1000) | 0);
+
+        // does the same job as parseInt truncates the float
+                minutes = (diff / 60) | 0;
+                seconds = (diff % 60) | 0;
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds; 
+
+                if (diff <= 0) {
+                    start= Date.now();
+                }
+            };
+    // we don't want to wait a full second before the timer starts
+            timer();
+            setInterval(timer, 100);
+        }
+         window.onload = function () {
+             var Minutes = 10 * 1,
+             display = document.querySelector('#time');
+             startTimer(Minutes, display);
+         };
+        
+        console.log('timer start');
+       //
+// General Ajax Call
+//
+get_score_info();
+ProblemLoad();
+var t = setInterval(function(){ProblemLoad()},10000);      
+var oxmlHttp;
+var oxmlHttpSend;
+      
+function get_score_info()
+{
+    if(typeof XMLHttpRequest != "undefined")
+    {
+        oxmlHttp = new XMLHttpRequest();
+    }
+    else if (window.ActiveXObject)
+    {
+       oxmlHttp = new ActiveXObject("Microsoft.XMLHttp");
+    }
+    if(oxmlHttp == null)
+    {
+        alert("Browser does not support XML Http Request");
+       return;
+    }
+    
+    oxmlHttp.onreadystatechange = get_score_info_result;
+    oxmlHttp.open("GET","MultiStart_2.php",true);
+    oxmlHttp.send(null);
+}
+     
+function get_score_info_result()
+{
+    if(oxmlHttp.readyState==4 || oxmlHttp.readyState=="complete")
+    {
+        var aaa = oxmlHttp.responseText, score_arr = JSON.parse(aaa);
+        score_1 = score_arr[0];
+        score_2 = score_arr[1];
+        score_3 = score_arr[2];
+        score_4 = score_arr[3];
+        
+    }
+}
+        
+        function myAvatar_1(){
+        document.getElementById("user_1").innerHTML = user_1;
+        document.getElementById("Avatar_1").innerHTML += "<img class='img1' src='../img/back/A_background_"+user_Avatar_1[0]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_1").innerHTML += "<img class='img2' src='../img/body.png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_1").innerHTML += "<img class='img3' src='../img/eye/A_eye_"+user_Avatar_1[1]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_1").innerHTML += "<img class='img4' src='../img/mouth/A_mouse_"+user_Avatar_1[2]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_1").innerHTML += "<img class='img5' src='../img/clothes/A_cloth_"+user_Avatar_1[3]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_1").innerHTML += "<img class='img6' src='../img/head/A_hat_"+user_Avatar_1[4]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_1").innerHTML += "<img class='img7' src='../img/hand/A_hand_"+user_Avatar_1[5]+".png' width='140' height='140' align='middle'>";
+        }
+        function myAvatar_2(){
+        document.getElementById("user_2").innerHTML = user_2;
+        document.getElementById("Avatar_2").innerHTML += "<img class='img1' src='../img/back/A_background_"+user_Avatar_2[0]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_2").innerHTML += "<img class='img2' src='../img/body.png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_2").innerHTML += "<img class='img3' src='../img/eye/A_eye_"+user_Avatar_2[1]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_2").innerHTML += "<img class='img4' src='../img/mouth/A_mouse_"+user_Avatar_2[2]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_2").innerHTML += "<img class='img5' src='../img/clothes/A_cloth_"+user_Avatar_2[3]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_2").innerHTML += "<img class='img6' src='../img/head/A_hat_"+user_Avatar_2[4]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_2").innerHTML += "<img class='img7' src='../img/hand/A_hand_"+user_Avatar_2[5]+".png' width='140' height='140' align='middle'>";
+        }
+        function myAvatar_3(){
+        document.getElementById("user_3").innerHTML = user_3;
+        document.getElementById("Avatar_3").innerHTML += "<img class='img1' src='../img/back/A_background_"+user_Avatar_3[0]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_3").innerHTML += "<img class='img2' src='../img/body.png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_3").innerHTML += "<img class='img3' src='../img/eye/A_eye_"+user_Avatar_3[1]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_3").innerHTML += "<img class='img4' src='../img/mouth/A_mouse_"+user_Avatar_3[2]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_3").innerHTML += "<img class='img5' src='../img/clothes/A_cloth_"+user_Avatar_3[3]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_3").innerHTML += "<img class='img6' src='../img/head/A_hat_"+user_Avatar_3[4]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_3").innerHTML += "<img class='img7' src='../img/hand/A_hand_"+user_Avatar_3[5]+".png' width='140' height='140' align='middle'>";
+        }
+        function myAvatar_4(){
+            document.getElementById("user_4").innerHTML = user_4;
+        document.getElementById("Avatar_4").innerHTML += "<img class='img1' src='../img/back/A_background_"+user_Avatar_4[0]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_4").innerHTML += "<img class='img2' src='../img/body.png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_4").innerHTML += "<img class='img3' src='../img/eye/A_eye_"+user_Avatar_4[1]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_4").innerHTML += "<img class='img4' src='../img/mouth/A_mouse_"+user_Avatar_4[2]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_4").innerHTML += "<img class='img5' src='../img/clothes/A_cloth_"+user_Avatar_4[3]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_4").innerHTML += "<img class='img6' src='../img/head/A_hat_"+user_Avatar_4[4]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_4").innerHTML += "<img class='img7' src='../img/hand/A_hand_"+user_Avatar_4[5]+".png' width='140' height='140' align='middle'>";
+        }
+        
+        function Load(){
+            
+            myAvatar_1();
+            
+            if(user_Avatar_2 != '0'){
+                myAvatar_2();
+            }
+            if(user_Avatar_3 != '0'){    
+                myAvatar_3();
+            }
+            if(user_Avatar_4 != '0'){
+                myAvatar_4();
+            }
+            
+        }
+        Load();
+        
+        
+        function ProblemLoad(){
+
+            $("#yes").attr("disabled", false);
+            $("#no").attr("disabled", false);
+  
+        
+        if(i == null){
+            i = 0;
+        } if(i == 10){
+            <?php
+                include "../dbConnect.php";
+                $num_room = $_SESSION['num_room'];
+                $sql = "UPDATE room SET Started=0, score_1=0, score_2=0, score_3=0, score_4=0, ProbNum='' WHERE Num_Room = '$num_room'";
+                $dbConnect->query($sql);
+            ?>
+            window.location.assign("Room.html?num_room="+num_room);
+            alert("your score is: "+score_1);
+            
+        } else {
+            i = i+1;
+        }
+        
+        if(score_1 == null){
+            score_1 = 0;
+        } if (score_2 == null){
+            score_2 = 0;
+        } if (score_3 == null){
+            score_3 = 0;
+        } if (score_4 == null){
+            score_4 = 0;
+        }
+        
+        
+        T = Prow[i];
+
+        document.getElementById("Problem_num").innerHTML = "&nbsp;&nbsp;&nbsp;"+i+". "+(T.Prob_OX)+"<br><br><br>";
+        ans = T.Answer_OX;
+        if (ppl_inroom == 1){
+            document.getElementById("Score_1").innerHTML = "  "+score_1+" 점";
+        } else if (ppl_inroom == 2){
+            document.getElementById("Score_1").innerHTML = "  "+score_1+" 점";
+            document.getElementById("Score_2").innerHTML = "  "+score_2+" 점";
+        } else if (ppl_inroom == 3){
+            document.getElementById("Score_1").innerHTML = "  "+score_1+" 점";
+            document.getElementById("Score_2").innerHTML = "  "+score_2+" 점";
+            document.getElementById("Score_3").innerHTML = "  "+score_3+" 점";
+        } else if(ppl_inroom == 4){
+            document.getElementById("Score_1").innerHTML = "  "+score_1+" 점";
+            document.getElementById("Score_2").innerHTML = "  "+score_2+" 점";
+            document.getElementById("Score_3").innerHTML = "  "+score_3+" 점";
+            document.getElementById("Score_4").innerHTML = "  "+score_4+" 점";
+        }
+   
+        
+        }
+        
+        function yes(){
+            $("#yes").attr("disabled", true);
+            $("#no").attr("disabled", true);
+            if(ans==0){
+                if (user_id == user_1){
+                    $.ajax({
+                        url:'send_score_plus.php?id=1',
+                        complete:function(){console.log('complete');},
+                        error:function(){console.log('fail');}
+                    });
+                } else if (user_id == user_2){
+                    $.ajax({
+                        url:'send_score_plus.php?id=2',
+                        complete:function(){console.log('complete');},
+                        error:function(){console.log('fail');}
+                    });
+                } else if (user_id == user_3){
+                    $.ajax({
+                        url:'send_score_plus.php?id=3',
+                        complete:function(){console.log('complete');},
+                        error:function(){console.log('fail');}
+                    });
+                } else if (user_id == user_4){
+                    $.ajax({
+                        url:'send_score_plus.php?id=4',
+                        complete:function(){console.log('complete');},
+                        error:function(){console.log('fail');}
+                    });
+                }
+            }else{
+                if (user_id == user_1){
+                  $.ajax({
+                        url:'send_score_minus.php?id=1',
+                        complete:function(){console.log('complete');},
+                        error:function(){console.log('fail');}
+                    });
+                } else if (user_id == user_2){
+                    $.ajax({
+                        url:'send_score_minus.php?id=2',
+                        complete:function(){console.log('complete');},
+                        error:function(){console.log('fail');}
+                    });
+                } else if (user_id == user_3){
+                    $.ajax({
+                        url:'send_score_minus.php?id=3',
+                        complete:function(){console.log('complete');},
+                        error:function(){console.log('fail');}
+                    });
+                } else if (user_id == user_4){
+                    $.ajax({
+                        url:'send_score_minus.php?id=4',
+                        complete:function(){console.log('complete');},
+                        error:function(){console.log('fail');}
+                    });
+                }  
+            }
+            get_score_info();
+        }
+        
+        function no(){
+            $("#yes").attr("disabled", true);
+            $("#no").attr("disabled", true);
+            if(ans==1){
+                if (user_id == user_1){
+                   $.ajax({
+                        url:'send_score_plus.php?id=1',
+                        complete:function(){console.log('complete');},
+                        error:function(){console.log('fail');}
+                    });
+                } else if (user_id == user_2){
+                    $.ajax({
+                        url:'send_score_plus.php?id=2',
+                        complete:function(){console.log('complete');},
+                        error:function(){console.log('fail');}
+                    });
+                } else if (user_id == user_3){
+                    $.ajax({
+                        url:'send_score_plus.php?id=3',
+                        complete:function(){console.log('complete');},
+                        error:function(){console.log('fail');}
+                    });
+                } else if (user_id == user_4){
+                    $.ajax({
+                        url:'send_score_plus.php?id=4',
+                        complete:function(){console.log('complete');},
+                        error:function(){console.log('fail');}
+                    });
+                }
+            }else{
+                if (user_id == user_1){
+                    $.ajax({
+                        url:'send_score_minus.php?id=1',
+                        complete:function(){console.log('complete');},
+                        error:function(){console.log('fail');}
+                    });
+                } else if (user_id == user_2){
+                    $.ajax({
+                        url:'send_score_minus.php?id=2',
+                        complete:function(){console.log('complete');},
+                        error:function(){console.log('fail');}
+                    });
+                } else if (user_id == user_3){
+                    $.ajax({
+                        url:'send_score_minus.php?id=3',
+                        complete:function(){console.log('complete');},
+                        error:function(){console.log('fail');}
+                    });
+                } else if (user_id == user_4){
+                   $.ajax({
+                        url:'send_score_minus.php?id=4',
+                        complete:function(){console.log('complete');},
+                        error:function(){console.log('fail');}
+                    });
+                }  
+            }
+            get_score_info();
+        }
+     document.getElementById('loading').innerHTML='';
+    </script>
+</body>
+</html>

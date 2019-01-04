@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta charset="utf-8" http-equiv="encoding">
+    <title>~QUIZ~</title>
+    
+    
+    <?php
+        include "../Quiz.php";
+    ?>
+    <style>
+        
+        .img1 {
+            position: absolute;
+            z-index: 1;
+            border: none;
+            display: block;
+            margin-left: 25px;
+            margin-top: 150px;
+        }
+        .img2 {
+            position: absolute;
+            z-index: 2;
+            border: none;
+            display: block;
+            margin-left: 25px;
+            margin-top: 150px;
+        }
+        .img3 {
+            position: absolute;
+            z-index: 3;
+            border: none;
+            display: block;
+            margin-left: 25px;
+            margin-top: 150px;
+        }
+        .img4 {
+            position: absolute;
+            z-index: 4;
+            border: none;
+            display: block;
+            margin-left: 25px;
+            margin-top: 150px;
+        }
+        .img5 {
+            position: absolute;
+            z-index: 5;
+            border: none;
+            display: block;
+            margin-left: 25px;
+            margin-top: 150px;
+        }
+        .img6 {
+            position: absolute;
+            z-index: 6;
+            border: none;
+            display: block;
+            margin-left: 25px;
+            margin-top: 150px;
+        }
+        .img7 {
+            position: absolute;
+            z-index: 7;
+            border: none;
+            display: block;            
+            margin-left: 25px;
+            margin-top: 150px;
+        }
+   
+        
+    </style>
+    
+    <script type="text/javascript">
+        
+        var user_Avatar = <?php echo json_encode($user_Avatar) ?>;
+        
+        
+        document.getElementById("Avatar").innerHTML += "<img class='img1' src='img/back/A_background_"+user_Avatar[0]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar").innerHTML += "<img class='img2' src='img/body.png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar").innerHTML += "<img class='img3' src='img/eye/A_eye_"+user_Avatar[1]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar").innerHTML += "<img class='img4' src='img/mouth/A_mouse_"+user_Avatar[2]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar").innerHTML += "<img class='img5' src='img/clothes/A_cloth_"+user_Avatar[3]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar").innerHTML += "<img class='img6' src='img/head/A_hat_"+user_Avatar[4]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar").innerHTML += "<img class='img7' src='img/hand/A_hand_"+user_Avatar[5]+".png' width='140' height='140' align='middle'>";
+        
+    </script>
+</head>
+
+<body>
+    <div style="position: absolute; display:block; margin-top: 115px; margin-left: 55px; font-family: 'Hanna', sans-serif; text-align: center; font-weight: bold; font-size: 20px;">나의 아바타</div>
+    <div style="position:relative;" ><p id="Avatar"></p></div>
+
+    
+</body>
+</html>

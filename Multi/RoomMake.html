@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta charset="utf-8" http-equiv="encoding">
+    <title>~QUIZ~</title>
+    
+    <link href="../Home.css" rel="stylesheet" type="text/css" />
+     <style>
+        .make{
+            text-align: center;
+            margin-top: 50px;
+            font-family: 'Hanna', sans-serif;
+            font-size: 30px;
+        }
+     </style>
+    <script type="text/javascript">
+        
+    </script>
+</head>
+
+<body>
+    
+    
+    <div class="page-holder">
+        <div class="banner">
+            <a href ="../Home-LI.html" id="logo"></a>
+        </div>
+        
+        <form method='post' action = 'RoomMake.php'>
+        <div class='Join'>
+            <div class='make'>방 만들기</div><br><br>
+            <div class='ct'>방 이름: &nbsp;&nbsp;&nbsp;<input type='text' name='room_name'></div> <br>            
+            <div class='ct'>입장 인원: <select name="max_ppl">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                </select></div> <br>
+            <button type='submit' class='button'>확인</button>
+                
+        </div>
+        </form>
+ 
+        
+    </div>
+    
+    
+</body>
+</html>

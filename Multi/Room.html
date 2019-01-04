@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta charset="utf-8" http-equiv="encoding">
+    <title>~QUIZ~</title>
+    
+    <link href="../Quiz.css" rel="stylesheet" type="text/css" />
+    <script src="../dist/moment.min.js"></script>
+    <script src="../dist/jquery.min.js"></script>
+    <script src="../dist/jquery.daterangepicker.min.js"></script>
+    <script src="../dist/jquery.csv.js"></script>
+    
+    <?php
+        include "Room.php";
+    ?>
+    <style>
+        .img {
+            position: relative;
+
+        }
+        .img1 {
+            position: absolute;
+            z-index: 1;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img2 {
+            position: absolute;
+            z-index: 2;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img3 {
+            position: absolute;
+            z-index: 3;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img4 {
+            position: absolute;
+            z-index: 4;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img5 {
+            position: absolute;
+            z-index: 5;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img6 {
+            position: absolute;
+            z-index: 6;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+        .img7 {
+            position: absolute;
+            z-index: 7;
+            display: block;
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+
+    </style>
+    
+    
+    <script type="text/javascript">
+        var num_room = <?php echo $num_room ?>;
+        var user_1 = '<?php echo $user_1 ?>';
+        var user_id = '<?php echo $user_id ?>';
+        
+        function out(){
+            window.location.assign("Roomout.php");
+        }
+       
+        
+    </script>
+</head>
+
+<body>
+    <div class="page-holder">
+       
+        
+        <div class="quiz-holder">
+            <div class="num"><p id="Problem_num"></p>
+                <div class='row'>
+                    <form action='RoomOut.php'>
+                        <button class='ans' onclick="out()">나가기</button>
+                    </form>
+                    <form action="GameStart.php">
+                        <button class='ans' type="submit">게임시작</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="user">
+            <div style="position:relative;" class="avatar" ><p id="Avatar_1"></p></div>
+            <div style="text-align: center; font-size:25px "><p id="user_1"></p></div><br>
+            <div class="ScoreBox"><p id="Score_1"></p></div>
+        </div>
+            
+        <div class="user">
+            <div style="position:relative;" class="avatar" ><p id="Avatar_2"></p></div>
+            <div style="text-align: center; font-size:25px "><p id="user_2"></p></div><br>
+            <div class="ScoreBox"><p id="Score_2"></p></div>
+        </div>
+        
+        <div class="user">
+            <div style="position:relative;" class="avatar" ><p id="Avatar_3"></p></div>
+            <div style="text-align: center; font-size:25px "><p id="user_3"></p></div><br>
+            <div class="ScoreBox"><p id="Score_3"></p></div>
+        </div>
+        
+        <div class="user">
+            <div style="position:relative;" class="avatar" ><p id="Avatar_4"></p></div>
+            <div style="text-align: center; font-size:25px "><p id="user_4"></p></div><br>
+            <div class="ScoreBox"><p id="Score_4"></p></div>
+        </div>
+        
+        
+    </div>
+    
+    <script type="text/javascript">
+        var t = setInterval(function(){get_avat_info()},2000);
+        var i = 0;
+        
+        var user_inroom = <?php echo $ppl_inroom ?>;
+        var user_Avatar_1 = <?php echo json_encode($user_Avatar_1) ?>;
+        var user_Avatar_2 = <?php echo json_encode($user_Avatar_2) ?>;
+        var user_Avatar_3 = <?php echo json_encode($user_Avatar_3) ?>;
+        var user_Avatar_4 = <?php echo json_encode($user_Avatar_4) ?>;
+        
+        var user_2 = '<?php echo $user_2 ?>';
+        var user_3 = '<?php echo $user_3 ?>';
+        var user_4 = '<?php echo $user_4 ?>';
+        var started = 0;
+//
+// General Ajax Call
+//
+      
+var oxmlHttp;
+var oxmlHttpSend;
+      
+function get_avat_info()
+{
+    if(typeof XMLHttpRequest != "undefined")
+    {
+        oxmlHttp = new XMLHttpRequest();
+    }
+    else if (window.ActiveXObject)
+    {
+       oxmlHttp = new ActiveXObject("Microsoft.XMLHttp");
+    }
+    if(oxmlHttp == null)
+    {
+        alert("Browser does not support XML Http Request");
+       return;
+    }
+    
+    oxmlHttp.onreadystatechange = get_avat_info_result;
+    oxmlHttp.open("GET","Room_2.php?num_room="+num_room,true);
+    oxmlHttp.send(null);
+}
+     
+function get_avat_info_result()
+{
+    if(oxmlHttp.readyState==4 || oxmlHttp.readyState=="complete")
+    {
+        user_inroom = <?php echo $ppl_inroom ?>;
+        var aaa = oxmlHttp.responseText, aaaa = JSON.parse(aaa);
+        user_Avatar_1 = aaaa[0];
+        user_Avatar_2 = aaaa[1];
+        user_Avatar_3 = aaaa[2];
+        user_Avatar_4 = aaaa[3];
+        user_1 = user_Avatar_1[6];
+        user_2 = user_Avatar_2[6];
+        user_3 = user_Avatar_3[6];
+        user_4 = user_Avatar_4[6];
+        started = user_Avatar_1[7];
+        
+        Load();
+    }
+}
+        
+        
+        
+        
+        function myAvatar_1(){
+        document.getElementById("user_1").innerHTML = user_1;
+        document.getElementById("Avatar_1").innerHTML += "<img class='img1' src='../img/back/A_background_"+user_Avatar_1[0]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_1").innerHTML += "<img class='img2' src='../img/body.png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_1").innerHTML += "<img class='img3' src='../img/eye/A_eye_"+user_Avatar_1[1]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_1").innerHTML += "<img class='img4' src='../img/mouth/A_mouse_"+user_Avatar_1[2]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_1").innerHTML += "<img class='img5' src='../img/clothes/A_cloth_"+user_Avatar_1[3]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_1").innerHTML += "<img class='img6' src='../img/head/A_hat_"+user_Avatar_1[4]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_1").innerHTML += "<img class='img7' src='../img/hand/A_hand_"+user_Avatar_1[5]+".png' width='140' height='140' align='middle'>";
+        }
+        function myAvatar_2(){
+        document.getElementById("user_2").innerHTML = user_2;
+        document.getElementById("Avatar_2").innerHTML += "<img class='img1' src='../img/back/A_background_"+user_Avatar_2[0]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_2").innerHTML += "<img class='img2' src='../img/body.png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_2").innerHTML += "<img class='img3' src='../img/eye/A_eye_"+user_Avatar_2[1]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_2").innerHTML += "<img class='img4' src='../img/mouth/A_mouse_"+user_Avatar_2[2]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_2").innerHTML += "<img class='img5' src='../img/clothes/A_cloth_"+user_Avatar_2[3]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_2").innerHTML += "<img class='img6' src='../img/head/A_hat_"+user_Avatar_2[4]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_2").innerHTML += "<img class='img7' src='../img/hand/A_hand_"+user_Avatar_2[5]+".png' width='140' height='140' align='middle'>";
+        }
+        function myAvatar_3(){
+        document.getElementById("user_3").innerHTML = user_3;
+        document.getElementById("Avatar_3").innerHTML += "<img class='img1' src='../img/back/A_background_"+user_Avatar_3[0]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_3").innerHTML += "<img class='img2' src='../img/body.png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_3").innerHTML += "<img class='img3' src='../img/eye/A_eye_"+user_Avatar_3[1]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_3").innerHTML += "<img class='img4' src='../img/mouth/A_mouse_"+user_Avatar_3[2]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_3").innerHTML += "<img class='img5' src='../img/clothes/A_cloth_"+user_Avatar_3[3]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_3").innerHTML += "<img class='img6' src='../img/head/A_hat_"+user_Avatar_3[4]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_3").innerHTML += "<img class='img7' src='../img/hand/A_hand_"+user_Avatar_3[5]+".png' width='140' height='140' align='middle'>";
+        }
+        function myAvatar_4(){
+            document.getElementById("user_4").innerHTML = user_4;
+        document.getElementById("Avatar_4").innerHTML += "<img class='img1' src='../img/back/A_background_"+user_Avatar_4[0]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_4").innerHTML += "<img class='img2' src='../img/body.png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_4").innerHTML += "<img class='img3' src='../img/eye/A_eye_"+user_Avatar_4[1]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_4").innerHTML += "<img class='img4' src='../img/mouth/A_mouse_"+user_Avatar_4[2]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_4").innerHTML += "<img class='img5' src='../img/clothes/A_cloth_"+user_Avatar_4[3]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_4").innerHTML += "<img class='img6' src='../img/head/A_hat_"+user_Avatar_4[4]+".png' width='140' height='140' align='middle'>";
+        document.getElementById("Avatar_4").innerHTML += "<img class='img7' src='../img/hand/A_hand_"+user_Avatar_4[5]+".png' width='140' height='140' align='middle'>";
+        }
+        
+        function Load(){
+            document.getElementById("user_1").innerHTML = '';
+            document.getElementById("user_2").innerHTML = '';
+            document.getElementById("user_3").innerHTML = '';
+            document.getElementById("user_4").innerHTML = '';
+            
+            document.getElementById("Avatar_1").innerHTML = '';
+            document.getElementById("Avatar_2").innerHTML = '';
+            document.getElementById("Avatar_3").innerHTML = '';
+            document.getElementById("Avatar_4").innerHTML = '';
+            
+            user_inroom = <?php echo $ppl_inroom ?>;
+            
+  
+            myAvatar_1();
+            
+            if(user_Avatar_2 != '0'){
+                myAvatar_2();
+            }
+            if(user_Avatar_3 != '0'){    
+                myAvatar_3();
+            }
+            if(user_Avatar_4 != '0'){
+                myAvatar_4();
+            }
+            if(started == 1){
+                window.location.assign("MultiStart.html?num_room="+num_room);
+            }
+            
+        }
+        Load();
+        
+        
+    </script>
+</body>
+</html>
