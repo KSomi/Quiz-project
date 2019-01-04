@@ -1,0 +1,124 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta charset="utf-8" http-equiv="encoding">
+    <title>~QUIZ~</title>
+    
+    <link href="Home.css" rel="stylesheet" type="text/css" />
+    <script src="../dist/moment.min.js"></script>
+        <script src="../dist/jquery.min.js"></script>
+        <script src="../dist/jquery.daterangepicker.min.js"></script>
+        <script src="../dist/jquery.csv.js"></script>
+    
+    <?php
+        include "Home-LI.php";
+        include "Message.php";
+    ?>
+    <style>
+    .table1 {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+
+    .table1 td, th {
+        border: 1px solid #D7DDE2;
+        font-size: 14px;
+        text-align: left;
+        padding: 8px;
+    }
+
+    </style>
+    <script type="text/javascript">
+        function GameStart(){
+            window.location.assign("Choosegame.html");
+        }
+        function LogOut(){
+            window.location.assign("Home.html");
+        }
+        function Mypage(){
+            window.location.assign("Mypage.html");
+        }
+        function Avatar(){
+            window.location.assign("Avatar.html");
+        }
+        function Message(){
+            window.location.assign("Message.html");
+        }
+       
+    </script>
+    <script>
+        $(function(){
+                $("#includedContent").load("Chat/Chat.html");
+        });
+        $(function(){
+                $("#includedAvatar").load("Avatar/Avatar.html");
+                $("#MyAvatar").load("Avatar/MyAvatar.html");
+        });
+    </script>
+</head>
+
+<body>
+    <div class="page-holder">
+
+        <div class="banner">
+            <a href ="Home-LI.html" id="logo"></a>
+            <button class ="startB" onClick="GameStart()"></button>
+            <div class="Sban"></div>
+            
+        </div>
+        
+        <div class="rank-holder">
+            <div class="hd"><br>이번주의 BEST<br><br></div>
+            
+            <div class="ct">
+                &nbsp;1위: &nbsp;&nbsp;<?php echo $rank_ppl[0]; ?>
+                <br><br>
+                &nbsp;2위: &nbsp;&nbsp;<?php echo $rank_ppl[1]; ?>
+                <br><br>
+                &nbsp;3위: &nbsp;&nbsp;<?php echo $rank_ppl[2]; ?>
+                <br><br>
+            </div><br><br><br><br><br>
+            <div id="includedContent"></div>
+        </div>
+        
+        
+        <div class="row">
+        <div class="AvatarChange">
+            <br><br><br><br><br>
+            <button class="hd_b" onclick="Avatar()">아바타 변경</button><br><br>
+            <button class="hd_b" onclick="Message()">쪽지함</button><br>
+        </div>
+        
+        <div class="inf-holder">
+            <div class="hd_info"><br>나의 정보</div>
+            <button class="LOB" style="font-size:11px" onclick="LogOut()">로그아웃</button>
+            <button class="LOB" style="font-size:11px" onclick="Mypage()">마이페이지</button>
+            
+            <br><br>
+            <div class="ct_info">
+                &nbsp;&nbsp;아이디: &nbsp;&nbsp;<?echo "$user_id";?><br><br>
+                &nbsp;&nbsp;최고 점수: &nbsp;&nbsp;<?echo "$High_rec";?><br><br>
+                &nbsp;&nbsp;이번주 최고 점수: &nbsp;&nbsp;<?echo "$Week_rec";?><br><br>
+            </div>
+            <div id="MyAvatar"></div>
+        </div>
+        </div>
+     
+        
+    </div>
+    <script type="text/javascript">
+        var Message_row = <?php echo json_encode($row_MSG) ?>;
+        console.log(Message_row);
+        for(var i = 0; i < Message_row.length; i++){
+            var a = Message_row[i].Num_MSG;
+            document.getElementById('message').innerHTML +="<tr><td><a href='MessageCheck.html?Mnum="+a+"'>"+Message_row[i].Title+"</a></td><td>"+Message_row[i].Time_MSG+"</td><td>"+Message_row[i].Sender+"</td></tr>";
+        }
+    </script>
+    
+</body>
+</html>

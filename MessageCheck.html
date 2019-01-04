@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta charset="utf-8" http-equiv="encoding">
+    <title>~QUIZ~</title>
+    
+    <link href="Home.css" rel="stylesheet" type="text/css" />
+    
+    <script type="text/javascript">
+        function GoBack(){
+            window.location.assign("Message.html");
+        }
+    </script>
+    <?php
+        include "dbConnect.php";
+        $Mnum = $_GET['Mnum'];
+
+        $sql = "SELECT * FROM message where Num_MSG='$Mnum'";
+        $res = $dbConnect->query($sql);
+        $row_CheckM = mysqli_fetch_array($res);
+    ?>
+</head>
+
+<body>
+    
+    
+    <div class="page-holder">
+        <div class="banner">
+            <a href ="Home-LI.html" id="logo"></a>
+        </div>
+     
+        <div class='Join'>
+            <div class='hd'><br>메시지 확인</div><br>
+            
+            <div class='ct'>&nbsp;보낸 사람 ID:&nbsp;<input type='text' style='width: 500px;' name='getter' value='<?php echo $row_CheckM["Sender"] ?>' disabled></div> <br>
+            
+            <div class='ct'>&nbsp;제목:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type='text' style='width: 500px;' name='title' value='<?php echo $row_CheckM["Title"] ?>' disabled></div> <br>
+            
+            <div class='ct'>내용:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                <input type='text' style='height:300px; width: 500px;' name='content' value='<?php echo $row_CheckM["Content"] ?>' disabled></div> <br>
+            
+                <button class='button' onclick='GoBack()'>확인</button>
+                
+        </div>
+ 
+        
+    </div>
+    <script type="text/javascript">
+     
+
+    </script>
+    
+</body>
+</html>

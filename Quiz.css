@@ -1,0 +1,78 @@
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+@import url(//fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
+
+
+.alt {
+    display:none;
+}
+
+.page-holder {
+    width:1020px;
+    margin: 0 auto;  
+    display: block;
+    border: 2px solid gray;
+}
+.page-holder .hd{
+    font-family: 'Hanna', sans-serif;
+    font-size: 20px;
+    text-align: center;
+}
+.loading {
+   
+    width: 1000px;
+    height: auto;
+}
+.quiz-holder {
+    margin: 30px auto;
+    display: flex;
+    width: 1000px;
+
+    border: 3px solid black;
+    border-radius: 8px;
+    background-color: white;
+    font-family: 'Hanna', sans-serif;
+}
+.quiz-holder .num {
+    float: left;
+    margin: 10px;
+    font-size: 25px;
+}
+.quiz-holder .num .row{
+    margin: 15px 150px;
+}
+.quiz-holder .num .row .ans {
+    width: 300px;
+    height: 100px;
+    margin-right: 20px;
+    padding-left: 5px;
+    border: 1px solid gray;
+    background-color: white;
+    border-radius: 5px;
+    font-size: 30px;
+}
+.quiz-holder .num .row .ans:hover {
+    background: gray;
+}
+
+
+.user {
+    margin-left: 30px;
+    margin-bottom: 30px;
+    width: 200px;
+    display: inline-block;
+    font-family: 'Hanna', sans-serif;
+
+}
+.user .avatar {
+    width: 200px;
+    height: 190px;
+    display: inline-block;
+    
+}
+.user .ScoreBox {
+    width: 195px;
+    border: 1px solid black;
+    padding-left: 5px;
+    font-size: 20px;
+}

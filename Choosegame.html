@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta charset="utf-8" http-equiv="encoding">
+    <title>~QUIZ~</title>
+    
+    <link href="Home.css" rel="stylesheet" type="text/css" />
+    <style>
+        .push{
+            width: 300px;
+            height: 100px;
+            background-color: white;
+            font-family: 'Hanna', sans-serif;
+            font-size: 30px;
+            display: block;
+            margin: 70px auto;
+        }
+        .push:hover{
+            background-color: gray;
+        }
+        .chooooose{
+            text-align: center;
+            margin-top: 40px;
+            font-family: 'Hanna', sans-serif;
+            font-size: 50px;
+        }
+    </style>
+    <script type="text/javascript">
+        function sp(){
+            window.location.assign("Quiz.html");
+        }
+        function mp(){
+            window.location.assign("Multi/RoomList.html");
+        }
+    </script>
+</head>
+
+<body>
+    
+    
+    <div class="page-holder">
+        <div class="banner">
+            <a href ="Home-LI.html" id="logo"></a>
+        </div>
+        <div class="chooooose">게임 선택</div> 
+        <button class="push" onclick="sp()">single play</button>
+        <button class="push" onclick="mp()">multi play</button>
+        
+    </div>
+    
+    
+</body>
+</html>
